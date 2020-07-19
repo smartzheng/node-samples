@@ -1,0 +1,70 @@
+#! /usr/bin/env node
+const program = require('commander');
+// 1. 自定义标志必须：分为长短标识，中间用逗号、竖线或者空格分割；标志后面可跟必须参数或可选参数，前者用<>包含，后者用[]包含。
+// 选项描述省略不报错：在使用 --help 命令时显示标志描述
+// 默认值可省略：当没有传入参数时则会使用默认值
+// program
+//   .option('-g, --git [type]', 'Add [marble]', 'Angie')
+//   .parse(process.argv);
+//
+// console.log("process.argv",process.argv)
+// console.log("program.args",program.args)
+//
+// console.log('you ordered a pizza with:');
+// if (program.git) console.log('  - git');
+// console.log('  - %s git', program.git);
+
+// 2.添加命令
+
+// program
+//   .version('0.0.1', '-V, --version')
+//   .helpOption('-h, --HELP')
+//   .option('-f, --foo', 'enable some foo')
+//   // 一个命令的组成: command option
+//   .command('rm <dir>')
+//   .description('删除文件夹')
+//   .option('-r, --recursive', 'Remove recursively')
+//   .action(function (dir, cmd) {
+//     console.log('remove ' + dir + (cmd.recursive ? ' recursively' : ''))
+//   })
+
+
+//3. 事件监听
+program
+  .version('0.0.1', '-V, --version')
+  .command('rm <dir>',"arg is description")
+  .option('-r, --recursive', 'Remove recursively')
+  .option('-g, --git [type]', 'Add [marble]', 'Angie')
+  .option('-a, --am',"ampm")
+  .action(() => {
+    console.log(123)
+  });
+program.on('option:am', function () {
+  console.log("on:am")
+});
+program.on('option:recursive', function () {
+  console.log("option:recursive")
+});
+program.on('command:rm', function () {
+  console.log("command:rm")
+});
+program.on('option:git', function () {
+  console.log("option:git")
+});
+program.on('command:*', function () {
+  console.log(987)
+  console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
+  process.exit(1);
+});
+program.on('--help', function() {
+  console.log('****************');
+  console.log('Examples:');
+  console.log('****************');
+  console.log('  $ deploy exec sequential');
+  console.log('  $ deploy exec async');
+});
+
+
+
+
+program.parse(process.argv);

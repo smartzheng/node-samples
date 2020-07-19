@@ -1,0 +1,3 @@
+# Project exclude paths
+/commander/node_modules/
+/vue-auto-router-cli/node_modules/

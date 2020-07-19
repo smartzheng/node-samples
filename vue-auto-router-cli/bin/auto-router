@@ -1,0 +1,7 @@
+#! /usr/bin/env node
+const { program } = require('commander')
+program.version(require('../package.json').version,'-v, --version') //获取
+.command('init <name>', 'init project')
+.command('generate', 'generating routers')
+.command('help', 'help me')
+program.parse(process.argv)

@@ -1,0 +1,21 @@
+#! /usr/bin/env node
+const {promisify} = require('es6-promisify')
+const download = promisify(require('download-git-repo'))
+const ora = require('ora')
+const { program } = require('commander')
+
+const clone = async (repo, desc) => {
+  const process = ora(`下载中...${repo}`)
+  process.start()
+  await download(repo, desc)
+  process.succeed('下载完成！')
+}
+
+program.action(async (env, option) => {
+  await clone('github:su37josephxia/vue-templates', option[0])
+})
+program.parse(process.argv)
+
+
+//console.log("process.argv",process.argv)
+//console.log("program.args",program.args)
