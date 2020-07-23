@@ -140,7 +140,61 @@ const resolvePromise = (promise2, result, resolve, reject) => {
   }
 }
 
+Promise.prototype.catch = function (catchFunc) {
+  return this.then(null, catchFunc)
+}
 
+Promise.resolve = function (data) {
+  return new Promise(resolve => {
+    resolve(data)
+  })
+}
+
+Promise.reject = function (data) {
+  return new Promise((resolve, reject) => {
+    reject(data)
+  })
+}
+
+Promise.all = function (promiseArray) {
+  if (!Array.isArray(promiseArray)) {
+    throw new TypeError('The arguments should be an array!')
+  }
+  return new Promise((resolve, reject) => {
+    try {
+      let resultArray = []
+      let count = 0
+      for (let i = 0; i < promiseArray.length; i++) {
+        const promise = promiseArray[i]
+        promise.then(value => {
+          resultArray[i] = value
+          count++
+          if (count === promiseArray.length) {
+            resolve(resultArray)
+          }
+        }, reject)
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+Promise.race = function (promiseArray) {
+  if (!Array.isArray(promiseArray)) {
+    throw new TypeError('The arguments should be an array!')
+  }
+  return new Promise((resolve, reject) => {
+    try {
+      const length = promiseArray.length
+      for (let i = 0; i < length; i++) {
+        promiseArray[i].then(resolve, reject)
+      }
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
 // test
 // const b = true
 
@@ -167,7 +221,7 @@ const resolvePromise = (promise2, result, resolve, reject) => {
 
 // console.log('sync end')
 
-new Promise((resolve, reject) => {
+new Promise(resolve => {
   resolve('data1')
 }).then(value => {
   console.log(`value1: ${ value }`)
