@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BFC</title>
+</head>
+<!--<style>-->
+<!--body {-->
+<!--    width: 600px;-->
+<!--    position: relative;-->
+<!--}-->
+
+<!--.left {-->
+<!--    width: 80px;-->
+<!--    height: 150px;-->
+<!--    float: left;-->
+<!--    background: blue;-->
+<!--}-->
+
+<!--.right {-->
+<!--    overflow: hidden;-->
+<!--    height: 200px;-->
+<!--    background: red;-->
+<!--}-->
+<!--</style>-->
+
+<!--<body>-->
+<!--<div class="left"></div>-->
+<!--<div class="right"></div>-->
+<!--</body>-->
+<style>
+.root {
+    border: 5px solid blue;
+    width: 300px;
+    float: left;
+}
+
+.child {
+    border: 5px solid red;
+    width:100px;
+    height: 100px;
+    float: left;
+}
+</style>
+<body>
+<div class="root">
+    <div class="child child1"></div>
+    <div class="child child2"></div>
+</div>
+</body>
+</html>
